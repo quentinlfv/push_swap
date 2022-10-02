@@ -16,21 +16,19 @@ void	ft_pb(t_list **stack_a, t_list **stack_b)
 {
 	t_list *tmp;
 
-	if (stack_a == NULL)
+	if (*stack_a == NULL)
 		return;
 	if ((*stack_b) == NULL)
 	{
-		*stack_b = ft_stacklast(*stack_a);
-		tmp = ft_stack_toindex(ft_stacksize(*stack_a) - 2, *stack_a);
-		tmp->next = NULL;
+		*stack_b = *stack_a;
+		*stack_a = (*stack_a)->next;
+		(*stack_b)->next = NULL;
 		return;
 	}
-	tmp = ft_stacklast(*stack_b);
-	tmp->next = ft_stacklast(*stack_a);
-	tmp = ft_stack_toindex(ft_stacksize(*stack_a) - 2, *stack_a);
-	tmp->next = NULL;
-	if (*stack_a == ft_stacklast(*stack_b))
-		(*stack_a) = NULL;
+	tmp = *stack_b;
+	*stack_b = *stack_a;
+	*stack_a = (*stack_a)->next;
+	(*stack_b)->next = tmp;
 }
 
 void    ft_pa(t_list **stack_a, t_list **stack_b)
@@ -73,11 +71,10 @@ void	ft_sa(t_list **stack_a)
 		tmp->next = NULL;
 		return;
 	}
-	tmp = ft_stack_toindex(index - 2, *stack_a);
-	save = ft_stack_toindex(index - 1, *stack_a);
-	save->next = tmp;
-	tmp->next = NULL;
-	tmp = ft_stack_toindex(index - 3, *stack_a);
+	tmp = (*stack_a);
+	*stack_a = (*stack_a)->next;
+	save = (*stack_a)->next;
+	(*stack_a)->next = tmp;
 	tmp->next = save;
 }
 
