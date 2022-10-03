@@ -34,13 +34,9 @@ void	new_stack_a(int argc, char **argv)
 	if (ft_stacksize(stack_a) == 2)
 		ft_sa(&stack_a);
 	else if (ft_stacksize(stack_a) == 3)
-		//printf("tri three\n");
 		tri_three(&stack_a);
 	else
-		printf("tri all\n");
-		//tri_all(&stack_a, &stack_b);
-	if (check_tri(&stack_a))
-		printf("stack is tried!\n");
+		tri_all(&stack_a, &stack_b);	
 	ft_printstack(stack_a);
 	printf("a\n\n");
 	ft_printstack(stack_b);
@@ -92,6 +88,7 @@ void	put_index(t_list **stack_a)
 int	check_tri(t_list **stack_a)
 {
 	t_list *tmp;
+<<<<<<< HEAD
 	int	save;
 
 	tmp = *stack_a;
@@ -106,3 +103,15 @@ int	check_tri(t_list **stack_a)
 	return (1);
 }
 
+=======
+
+	tmp = *stack_a;
+	while (tmp->next !=NULL)
+	{
+			if (tmp->index > tmp->next->index)
+				return (0);
+			tmp = tmp->next;
+	}
+	return (1);
+}
+>>>>>>> b4741fec65425e6f03db880df2ff6f08caecefbe
