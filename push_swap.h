@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:36:12 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/09/29 14:10:04 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:43:07 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ typedef struct s_list
 {
 	int		content;
 	int		index;
+	int		pos;
+	int		target_pos;
+	int		cost_a;
+	int		cost_b;
 	struct s_list	*next;
 }t_list;
 
@@ -48,6 +52,10 @@ int		check_tri(t_list **stack_a);
 
 void	new_stack_a(int argc, char **argv);
 void	put_index(t_list **stack_a);
+void    put_pos(t_list **stack);
+void    put_target_pos(t_list **stack_a, t_list **stack_b);
+void    cost_a(t_list **stack_a, t_list **stack_b, int pos);
+void    cost_b(t_list **stack_b, t_list **stack, int pos);
 
 void	tri_three(t_list **stack_a);
 void	tri_all(t_list **stack_a, t_list **stack_b);

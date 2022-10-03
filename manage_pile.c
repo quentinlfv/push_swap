@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 14:43:48 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/09/29 17:44:27 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/03 16:31:55 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ void	new_stack_a(int argc, char **argv)
 	stack_b = NULL;
 	while (++i < argc)
 		ft_stackadd_back(&stack_a, ft_stacknew(ft_atoi(argv[i])));
+	put_index(&stack_a);
 	if (check_tri(&stack_a))
 	{
 		printf("stack is tried!\n");
 		return;
 	}
-	ft_printstack(stack_a);
-	put_index(&stack_a);
 	if (ft_stacksize(stack_a) == 2)
 		ft_sa(&stack_a);
 	else if (ft_stacksize(stack_a) == 3)
 		tri_three(&stack_a);
 	else
+		//printf("tri all\n");
 		tri_all(&stack_a, &stack_b);	
 	ft_printstack(stack_a);
 	printf("a\n\n");
@@ -49,25 +49,25 @@ void	put_index(t_list **stack_a)
 {
 	int	index;
 	int	save;
-	int	min_value;
+	int	max_value;
 	t_list 	*tmp;
 
 	index = 1;
 	tmp = *stack_a;
-	min_value = tmp->content;
+	max_value = tmp->content;
 	while (tmp != NULL)
 	{
-		if (tmp->content < min_value)
-			min_value = tmp->content;
+		if (tmp->content > max_value)
+			max_value = tmp->content;
 		tmp = tmp->next;
 	}
-	save = min_value;
+	save = max_value;
 	while (index <= ft_stacksize(*stack_a))
 	{
 		tmp = *stack_a;
 		while (tmp != NULL)
 		{
-			if (tmp->index == 0 && tmp->content > save)
+			if (tmp->index == 0 && tmp->content < save)
 					save = tmp->content;
 			tmp = tmp->next;
 		}
@@ -81,29 +81,28 @@ void	put_index(t_list **stack_a)
 			}
 			tmp = tmp->next;
 		}
-		save = min_value;
+		save = max_value;
+	}
+}
+
+void	put_pos(t_list **stack)
+{
+	t_list	*tmp;
+	int	i;
+
+	i = 0;
+	tmp = *stack;
+	while (tmp != NULL)
+	{
+		tmp->pos = i;
+		i++;
+		tmp = tmp->next;
 	}
 }
 
 int	check_tri(t_list **stack_a)
 {
 	t_list *tmp;
-<<<<<<< HEAD
-	int	save;
-
-	tmp = *stack_a;
-	save = tmp->content;
-	while (tmp->next != NULL)
-	{
-		tmp = tmp->next;
-		if (save < tmp->content)
-			return (0);
-		save = tmp->content;
-	}
-	return (1);
-}
-
-=======
 
 	tmp = *stack_a;
 	while (tmp->next !=NULL)
@@ -114,4 +113,3 @@ int	check_tri(t_list **stack_a)
 	}
 	return (1);
 }
->>>>>>> b4741fec65425e6f03db880df2ff6f08caecefbe
