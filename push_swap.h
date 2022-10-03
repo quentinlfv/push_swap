@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:36:12 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/09/28 14:25:27 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/09/29 14:10:04 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,12 @@ void    ft_stackadd_back(t_list **lst, t_list *new);
 int     check_args(int argc, char **argv);
 int     check_double(int argc, char **argv);
 int	check_isint(int argc, char **argv);
+int     check_tri(t_list **stack_a);
 
 void	new_stack_a(int argc, char **argv);
 void	put_index(t_list **stack_a);
+
+void	tri_three(t_list **stack_a);
 
 void	ft_pb(t_list **stack_a, t_list **stack_b);
 void	ft_pa(t_list **stack_a, t_list **stack_b);

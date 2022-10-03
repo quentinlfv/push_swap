@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 16:48:03 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/09/28 17:19:25 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/09/29 17:37:35 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,10 @@
 
 void	tri_three(t_list **stack_a)
 {
-	t_list	*tmp;
-	int	index;
-	int	i;
-
-	tmp = *stack_a;
-	index = tmp->index;
-	while (tmp != NULL)
-	{
-		if (tmp->index > index)
-			index = tmp->index;
-		tmp = tmp->next;
-	}
-	if 
+	if ((*stack_a)->index > (*stack_a)->next->index && (*stack_a)->index > (*stack_a)->next->next->index)
+		ft_ra(stack_a);
+	else if ((*stack_a)->next->index > (*stack_a)->index && (*stack_a)->next->index > (*stack_a)->next->next->index)
+		ft_rra(stack_a);
+	if ((*stack_a)->index > (*stack_a)->next->index)
+		ft_sa(stack_a);
 }

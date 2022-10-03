@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 14:43:48 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/09/28 17:20:51 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/09/29 17:44:27 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,23 @@ void	new_stack_a(int argc, char **argv)
 	stack_b = NULL;
 	while (++i < argc)
 		ft_stackadd_back(&stack_a, ft_stacknew(ft_atoi(argv[i])));
+	if (check_tri(&stack_a))
+	{
+		printf("stack is tried!\n");
+		return;
+	}
+	ft_printstack(stack_a);
 	put_index(&stack_a);
 	if (ft_stacksize(stack_a) == 2)
 		ft_sa(&stack_a);
 	else if (ft_stacksize(stack_a) == 3)
-		printf("tri three");
-		//tri_three(&stack_a);
+		//printf("tri three\n");
+		tri_three(&stack_a);
 	else
 		printf("tri all\n");
 		//tri_all(&stack_a, &stack_b);
-	
+	if (check_tri(&stack_a))
+		printf("stack is tried!\n");
 	ft_printstack(stack_a);
 	printf("a\n\n");
 	ft_printstack(stack_b);
@@ -46,25 +53,25 @@ void	put_index(t_list **stack_a)
 {
 	int	index;
 	int	save;
-	int	max_value;
+	int	min_value;
 	t_list 	*tmp;
 
 	index = 1;
 	tmp = *stack_a;
-	max_value = tmp->content;
-	while (tmp->next != NULL)
+	min_value = tmp->content;
+	while (tmp != NULL)
 	{
-		if (tmp->content > max_value)
-			max_value = tmp->content;
+		if (tmp->content < min_value)
+			min_value = tmp->content;
 		tmp = tmp->next;
 	}
-	save = max_value;
+	save = min_value;
 	while (index <= ft_stacksize(*stack_a))
 	{
 		tmp = *stack_a;
 		while (tmp != NULL)
 		{
-			if (tmp->index == 0 && tmp->content < save)
+			if (tmp->index == 0 && tmp->content > save)
 					save = tmp->content;
 			tmp = tmp->next;
 		}
@@ -78,6 +85,24 @@ void	put_index(t_list **stack_a)
 			}
 			tmp = tmp->next;
 		}
-		save = max_value;
+		save = min_value;
 	}
 }
+
+int	check_tri(t_list **stack_a)
+{
+	t_list *tmp;
+	int	save;
+
+	tmp = *stack_a;
+	save = tmp->content;
+	while (tmp->next != NULL)
+	{
+		tmp = tmp->next;
+		if (save < tmp->content)
+			return (0);
+		save = tmp->content;
+	}
+	return (1);
+}
+
