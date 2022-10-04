@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 13:59:01 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/09/28 16:27:20 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/04 17:09:03 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_args(int argc, char **argv)
 		j = -1;
 		while (argv[i][++j])
 		{
-			if(!ft_isdigit(argv[i][j]) && argv[i][0] != 45)
+			if(!ft_isdigit(argv[i][j]) && argv[i][0] != 45 && argv[i][0] != 43)
 				return (0);
 		}
 	}

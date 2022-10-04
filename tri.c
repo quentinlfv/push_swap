@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 16:48:03 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/10/03 19:43:29 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/04 15:46:20 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,44 +24,117 @@ void	tri_three(t_list **stack_a)
 
 void	tri_all(t_list **stack_a, t_list **stack_b)
 {
-	t_list	*tmp;
+	push_all_inb(stack_a, stack_b);
+	tri_three(stack_a);
+	while ((*stack_b) != NULL)
+	{
+		put_pos(stack_a);
+		put_pos(stack_b);
+		put_target_pos(stack_a, stack_b);
+		push_in_a(stack_a, stack_b);
+	}
+	pivot_stack_a(stack_a);
+}
 
-	//push_all_inb(stack_a, stack_b);
-	ft_pb(stack_a, stack_b);
-	ft_pb(stack_a, stack_b);
-	ft_pb(stack_a, stack_b);
-	//tri_three(stack_a);
-	put_pos(stack_a);
-	put_pos(stack_b);
-	put_target_pos(stack_a, stack_b);
+void	push_in_a(t_list **stack_a, t_list **stack_b)
+{
+	t_list *tmp;
+	t_list *save_pos;
+
 	tmp = *stack_b;
 	while (tmp != NULL)
 	{
 		cost_a(stack_a, &tmp, tmp->target_pos);
 		cost_b(stack_b, &tmp, tmp->pos);
+		tmp->nbr_move = (abs(tmp->cost_a) + abs(tmp->cost_b));
 		tmp = tmp->next;
 	}
+	save_pos = *stack_b;
+	tmp = *stack_b;
+	while (tmp != NULL)
+	{
+		if (save_pos->nbr_move > tmp->nbr_move)
+			save_pos = tmp;
+		tmp = tmp->next;
+	}
+	do_commands(stack_a, stack_b, &save_pos);
+}
+
+
+void	do_commands(t_list **stack_a, t_list **stack_b, t_list **move)
+{
+	if ((*move)->cost_a > 0 && (*move)->cost_b > 0)
+	{
+		while ((*move)->cost_a != 0 && (*move)->cost_b != 0)
+		{
+			ft_rrr(stack_a, stack_b);
+			(*move)->cost_a += 1;
+			(*move)->cost_b += 1;
+		}
+	}
+	else if ((*move)->cost_a < 0 && (*move)->cost_b < 0)
+	{
+		while ((*move)->cost_a != 0 && (*move)->cost_b != 0)
+		{
+			ft_rr(stack_a, stack_b);
+			(*move)->cost_a -= 1;
+			(*move)->cost_b -= 1;
+		}
+	}
+	if ((*move)->cost_a > 0)
+	{
+		while ((*move)->cost_a != 0)
+		{
+			ft_ra(stack_a);
+			(*move)->cost_a -= 1;
+		}
+	}
+	else if ((*move)->cost_a < 0)
+	{
+		while ((*move)->cost_a != 0)
+		{
+			ft_rra(stack_a);
+			(*move)->cost_a += 1;
+		}
+	}
+	if ((*move)->cost_b > 0)
+        {
+                while ((*move)->cost_b != 0)
+                {
+                        ft_rb(stack_b);
+                        (*move)->cost_b -= 1;
+                }
+        }
+        else if ((*move)->cost_b < 0)
+        {
+                while ((*move)->cost_b != 0)
+                {
+                        ft_rra(stack_b);
+                        (*move)->cost_b += 1;
+                }
+        }
+	ft_pa(stack_a, stack_b);
+	(*move)->target_pos = 0;
+	(*move)->nbr_move = 0;
 }
 
 void	push_all_inb(t_list **stack_a, t_list **stack_b)
 {
-	t_list *tmp;
 	int	i;
 	int	mediane;
 
 	i = 1;
 	mediane = ft_stacksize(*stack_a) / 2;
-	printf("mediane = %d\n", mediane);
 	while (mediane > i)
 	{
-		tmp = *stack_a;
-		if (tmp->index < mediane)
+		if ((*stack_a)->index < mediane + 1)
 		{
 			ft_pb(stack_a, stack_b);
 			i++;
 		}
 		else
 			ft_ra(stack_a);
+			
 	}
 	while (ft_stacksize(*stack_a) > 3)
 		ft_pb(stack_a, stack_b);
@@ -91,7 +164,6 @@ void	put_target_pos(t_list **stack_a, t_list **stack_b)
 			if (tmp_a->index > tmp_b->index && (tp_index - tmp_b->index) > (tmp_a->index - tmp_b->index) 
 					|| (tp_index - tmp_b->index) < 0)
 			{
-				printf("tmp_a->index : %d\n", tmp_a->index);
 				tmp_b->target_pos = tmp_a->pos;
 				tp_index = tmp_a->index;
 			}
@@ -114,6 +186,20 @@ void	put_target_pos(t_list **stack_a, t_list **stack_b)
 	}
 }
 
+void	pivot_stack_a(t_list **stack)
+{
+	if ((*stack)->index == 1)
+		return;
+	if ((*stack)->index > (ft_stacksize(*stack) / 2) + 1)
+	{
+		while ((*stack)->index != 1)
+			ft_ra(stack);
+	}
+	else
+		while ((*stack)->index != 1)
+			ft_rra(stack);
+}
+
 void	cost_a(t_list **stack_a, t_list **stack_b, int pos)
 {
 	int	stack_size;
@@ -124,7 +210,6 @@ void	cost_a(t_list **stack_a, t_list **stack_b, int pos)
 		mediane = stack_size / 2 + 1;
 	else 
 		mediane = stack_size / 2;
-	printf("stack_size = %d | pos : %d\n", stack_size, pos);
 	if (stack_size - pos > mediane)
 		(*stack_b)->cost_a = (stack_size - (stack_size - pos));
 	else 
@@ -141,7 +226,6 @@ void    cost_b(t_list **stack_b, t_list **stack, int pos)
 		mediane = stack_size / 2 + 1;
 	else
 		mediane = stack_size / 2;
-	printf("mediane = %d | stacksize = %d\n", mediane, stack_size);
         if (stack_size - pos > mediane)
                 (*stack)->cost_b = stack_size - (stack_size - pos);
         else

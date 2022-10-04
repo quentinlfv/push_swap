@@ -6,11 +6,18 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:01:42 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/09/21 17:13:50 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/04 11:48:04 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	abs(int	a)
+{
+	if (a < 0)
+		a = -a;
+	return (a);
+}
 
 int     ft_isdigit(int c)
 {

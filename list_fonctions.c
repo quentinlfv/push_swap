@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 14:30:07 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/10/03 19:04:34 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/04 11:37:47 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	ft_printstack(t_list *lst)
 {
 	while (lst != NULL)
 	{
-		printf("content : %d | index : %d | pos : %d | target_pos : %d | cost_a : %d | cost_b : %d\n"
-			,lst->content, lst->index, lst->pos, lst->target_pos, lst->cost_a, lst->cost_b);
+		printf("content : %d | index : %d | pos : %d | target_pos : %d | cost_a : %d | cost_b : %d | nbr_move : %d\n"
+			,lst->content, lst->index, lst->pos, lst->target_pos, lst->cost_a, lst->cost_b, lst->nbr_move);
 		lst = lst->next;
 	}
         printf("____\n");

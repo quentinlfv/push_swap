@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 14:17:30 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/09/28 14:09:14 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/04 10:30:45 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,21 @@ void	ft_pb(t_list **stack_a, t_list **stack_b)
 
 void    ft_pa(t_list **stack_a, t_list **stack_b)
 {
-        t_list *tmp;
+	t_list *tmp;
 
-        if (stack_b == NULL)
+        if (*stack_b == NULL)
                 return;
         if ((*stack_a) == NULL)
         {
-                *stack_a = ft_stacklast(*stack_b);
-                tmp = ft_stack_toindex(ft_stacksize(*stack_b) - 2, *stack_b);
-                tmp->next = NULL;
+                *stack_a = *stack_b;
+                *stack_b = (*stack_b)->next;
+                (*stack_a)->next = NULL;
                 return;
         }
-        tmp = ft_stacklast(*stack_a);
-        tmp->next = ft_stacklast(*stack_b);
-        tmp = ft_stack_toindex(ft_stacksize(*stack_b) - 2, *stack_b);
-        tmp->next = NULL;
-	if (*stack_b == ft_stacklast(*stack_a))
-		(*stack_b) = NULL;
+        tmp = *stack_a;
+        *stack_a = *stack_b;
+        *stack_b = (*stack_a)->next;
+        (*stack_a)->next = tmp;
 }
 
 void	ft_sa(t_list **stack_a)
@@ -80,7 +78,7 @@ void	ft_sa(t_list **stack_a)
 
 void    ft_sb(t_list **stack_b)
 {
-        int     index;
+	int     index;
         t_list  *tmp;
         t_list  *save;
 
@@ -97,11 +95,10 @@ void    ft_sb(t_list **stack_b)
                 tmp->next = NULL;
                 return;
         }
-        tmp = ft_stack_toindex(index - 2, *stack_b);
-        save = ft_stack_toindex(index - 1, *stack_b);
-        save->next = tmp;
-        tmp->next = NULL;
-        tmp = ft_stack_toindex(index - 3, *stack_b);
+        tmp = (*stack_b);
+        *stack_b = (*stack_b)->next;
+        save = (*stack_b)->next;
+        (*stack_b)->next = tmp;
         tmp->next = save;
 }
 

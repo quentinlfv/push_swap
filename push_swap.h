@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:36:12 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/10/03 19:43:07 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/04 14:15:19 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ typedef struct s_list
 	int		target_pos;
 	int		cost_a;
 	int		cost_b;
+	int		nbr_move;
 	struct s_list	*next;
 }t_list;
 
+int		abs(int a);
 int     	ft_isdigit(int c);
 size_t  	ft_strlen(const char *s);
 int     	ft_strcmp(const char *string1, const char *string2);
@@ -60,6 +62,9 @@ void    cost_b(t_list **stack_b, t_list **stack, int pos);
 void	tri_three(t_list **stack_a);
 void	tri_all(t_list **stack_a, t_list **stack_b);
 void	push_all_inb(t_list	**stack_a, t_list **stack_b);
+void    push_in_a(t_list **stack_a, t_list **stack_b);
+void    do_commands(t_list **stack_a, t_list **stack_b, t_list **move);
+void    pivot_stack_a(t_list **stack);
 
 void	ft_pb(t_list **stack_a, t_list **stack_b);
 void	ft_pa(t_list **stack_a, t_list **stack_b);
