@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 14:43:48 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/10/03 16:31:55 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:09:56 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ void	new_stack_a(int argc, char **argv)
 		tri_three(&stack_a);
 	else
 		//printf("tri all\n");
-		tri_all(&stack_a, &stack_b);	
+		tri_all(&stack_a, &stack_b);
+	/*	
 	ft_printstack(stack_a);
 	printf("a\n\n");
 	ft_printstack(stack_b);
 	printf("b\n\n");
+	*/
 	ft_stackclear(stack_a);
 	ft_stackclear(stack_b);
 }

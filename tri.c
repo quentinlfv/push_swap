@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 16:48:03 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/10/04 15:46:20 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:17:49 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	tri_all(t_list **stack_a, t_list **stack_b)
 		put_pos(stack_b);
 		put_target_pos(stack_a, stack_b);
 		push_in_a(stack_a, stack_b);
+
 	}
 	pivot_stack_a(stack_a);
 }
@@ -70,6 +71,7 @@ void	do_commands(t_list **stack_a, t_list **stack_b, t_list **move)
 			ft_rrr(stack_a, stack_b);
 			(*move)->cost_a += 1;
 			(*move)->cost_b += 1;
+			printf("rrr\n");
 		}
 	}
 	else if ((*move)->cost_a < 0 && (*move)->cost_b < 0)
@@ -79,6 +81,7 @@ void	do_commands(t_list **stack_a, t_list **stack_b, t_list **move)
 			ft_rr(stack_a, stack_b);
 			(*move)->cost_a -= 1;
 			(*move)->cost_b -= 1;
+			printf("rr\n");
 		}
 	}
 	if ((*move)->cost_a > 0)
@@ -87,6 +90,7 @@ void	do_commands(t_list **stack_a, t_list **stack_b, t_list **move)
 		{
 			ft_ra(stack_a);
 			(*move)->cost_a -= 1;
+			printf("ra\n");
 		}
 	}
 	else if ((*move)->cost_a < 0)
@@ -95,6 +99,7 @@ void	do_commands(t_list **stack_a, t_list **stack_b, t_list **move)
 		{
 			ft_rra(stack_a);
 			(*move)->cost_a += 1;
+			printf("rra\n");
 		}
 	}
 	if ((*move)->cost_b > 0)
@@ -103,19 +108,22 @@ void	do_commands(t_list **stack_a, t_list **stack_b, t_list **move)
                 {
                         ft_rb(stack_b);
                         (*move)->cost_b -= 1;
+			printf("rb\n");
                 }
         }
         else if ((*move)->cost_b < 0)
         {
                 while ((*move)->cost_b != 0)
                 {
-                        ft_rra(stack_b);
+                        ft_rrb(stack_b);
                         (*move)->cost_b += 1;
+			printf("rrb\n");
                 }
         }
 	ft_pa(stack_a, stack_b);
 	(*move)->target_pos = 0;
 	(*move)->nbr_move = 0;
+	printf("pa\n");
 }
 
 void	push_all_inb(t_list **stack_a, t_list **stack_b)
@@ -130,14 +138,21 @@ void	push_all_inb(t_list **stack_a, t_list **stack_b)
 		if ((*stack_a)->index < mediane + 1)
 		{
 			ft_pb(stack_a, stack_b);
+			printf("pb\n");
 			i++;
 		}
 		else
+		{
 			ft_ra(stack_a);
+			printf("ra\n");
+		}
 			
 	}
 	while (ft_stacksize(*stack_a) > 3)
+	{
 		ft_pb(stack_a, stack_b);
+		printf("pb\b");
+	}
 }
 
 void	put_target_pos(t_list **stack_a, t_list **stack_b)
@@ -193,11 +208,17 @@ void	pivot_stack_a(t_list **stack)
 	if ((*stack)->index > (ft_stacksize(*stack) / 2) + 1)
 	{
 		while ((*stack)->index != 1)
+		{
 			ft_ra(stack);
+			printf("ra\n");
+		}
 	}
 	else
 		while ((*stack)->index != 1)
+		{
 			ft_rra(stack);
+			printf("rra\n");
+		}
 }
 
 void	cost_a(t_list **stack_a, t_list **stack_b, int pos)
