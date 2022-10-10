@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 13:59:01 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/10/04 17:09:03 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:08:33 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int 	main(int argc, char **argv)
 		return (0);
 	}
 	else
-		printf("It works!\n");
-	new_stack_a(argc, argv);
+		new_stack_a(argc, argv);
 	return (0);
 }

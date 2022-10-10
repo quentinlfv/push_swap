@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 16:48:03 by qlefevre          #+#    #+#             */
-/*   Updated: 2022/10/05 16:17:49 by qlefevre         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:43:53 by qlefevre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,21 @@
 
 void	tri_three(t_list **stack_a)
 {
-	if 	((*stack_a)->index > (*stack_a)->next->index && (*stack_a)->index > (*stack_a)->next->next->index)
+	if 	(((*stack_a)->index > (*stack_a)->next->index) && (*stack_a)->index > (*stack_a)->next->next->index)
+	{
 		ft_ra(stack_a);
-	else if ((*stack_a)->next->index > (*stack_a)->index && (*stack_a)->next->index > (*stack_a)->next->next->index)
+		printf("ra\n");
+	}
+	else if (((*stack_a)->next->index > (*stack_a)->index) && (*stack_a)->next->index > (*stack_a)->next->next->index)
+	{
 		ft_rra(stack_a);
+		printf("rra\n");
+	}
 	if ((*stack_a)->index > (*stack_a)->next->index)
+	{
 		ft_sa(stack_a);
+		printf("sa\n");
+	}
 }
 
 void	tri_all(t_list **stack_a, t_list **stack_b)
@@ -68,20 +77,20 @@ void	do_commands(t_list **stack_a, t_list **stack_b, t_list **move)
 	{
 		while ((*move)->cost_a != 0 && (*move)->cost_b != 0)
 		{
-			ft_rrr(stack_a, stack_b);
-			(*move)->cost_a += 1;
-			(*move)->cost_b += 1;
-			printf("rrr\n");
+			ft_rr(stack_a, stack_b);
+			(*move)->cost_a = (*move)->cost_a - 1;
+			(*move)->cost_b = (*move)->cost_b - 1;
+			printf("rr\n");
 		}
 	}
 	else if ((*move)->cost_a < 0 && (*move)->cost_b < 0)
 	{
 		while ((*move)->cost_a != 0 && (*move)->cost_b != 0)
 		{
-			ft_rr(stack_a, stack_b);
-			(*move)->cost_a -= 1;
-			(*move)->cost_b -= 1;
-			printf("rr\n");
+			ft_rrr(stack_a, stack_b);
+			(*move)->cost_a = (*move)->cost_a + 1;
+			(*move)->cost_b = (*move)->cost_b + 1;
+			printf("rrr\n");
 		}
 	}
 	if ((*move)->cost_a > 0)
@@ -151,7 +160,7 @@ void	push_all_inb(t_list **stack_a, t_list **stack_b)
 	while (ft_stacksize(*stack_a) > 3)
 	{
 		ft_pb(stack_a, stack_b);
-		printf("pb\b");
+		printf("pb\n");
 	}
 }
 
@@ -176,8 +185,8 @@ void	put_target_pos(t_list **stack_a, t_list **stack_b)
 				tmp_b->target_pos = tmp_a->pos;
 				tp_index = tmp_a->index;
 			}
-			if (tmp_a->index > tmp_b->index && (tp_index - tmp_b->index) > (tmp_a->index - tmp_b->index) 
-					|| (tp_index - tmp_b->index) < 0)
+			if ((tmp_a->index > tmp_b->index) && ((tp_index - tmp_b->index) > (tmp_a->index - tmp_b->index) 
+					|| (tp_index - tmp_b->index) < 0))
 			{
 				tmp_b->target_pos = tmp_a->pos;
 				tp_index = tmp_a->index;
@@ -252,4 +261,3 @@ void    cost_b(t_list **stack_b, t_list **stack, int pos)
         else
                 (*stack)->cost_b = (stack_size - pos) * (-1);
 }
-
