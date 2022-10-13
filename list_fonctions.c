@@ -61,40 +61,6 @@ int	ft_stacksize(t_list *lst)
 	return (size);
 }
 
-void	ft_printstack(t_list *lst)
-{
-	while (lst != NULL)
-	{
-		printf("content : %d | index : %d | pos : %d | target_pos : %d | cost_a : %d | cost_b : %d | nbr_move : %d\n"
-			,lst->content, lst->index, lst->pos, lst->target_pos, lst->cost_a, lst->cost_b, lst->nbr_move);
-		lst = lst->next;
-	}
-        printf("____\n");
-}
-
-void	ft_stackclear(t_list *lst)
-{
-	t_list	*tmp;
-	t_list	*t;
-
-	tmp = lst;
-	while (tmp)
-	{
-		t = tmp->next;
-		free(tmp);
-		tmp = t;
-	}
-	lst = NULL;
-}
-
-void	ft_stackadd_front(t_list **lst, t_list *new)
-{
-	if (!lst)
-		return ;
-	new->next = *lst;
-	*lst = new;
-}
-
 void	ft_stackadd_back(t_list **lst, t_list *new)
 {
 	t_list	*tmp;
