@@ -1,4 +1,27 @@
 #include "push_swap.h"
+#include "get_next_line.h"
+
+void	print_order(char **order)
+{
+	int	i = 0;
+	while (order[i])
+	{
+		printf("%s\n", order[i]);
+		i++;
+	}
+}
+
+void	print_stack(t_list *stack)
+{
+	t_list *tmp;
+
+	tmp = stack;
+	while (tmp)
+	{
+		printf("%d\n", tmp->content);
+		tmp = tmp->next;
+	}
+}
 
 char	**get_order(void)
 {
@@ -9,14 +32,15 @@ char	**get_order(void)
 	order = NULL;
 	size = 0;
 	line = get_next_line(0);
-	map = add_new_order(order, line, &size);
+	order = add_new_order(order, line, &size);
 	while (line != NULL)
 	{
 		free(line);
 		line = get_next_line(0);
 		if (line != NULL)
-			map = add_new_order(order, line, &size);
+			order = add_new_order(order, line, &size);
 	}
+	print_order(order);
 	return (order);
 }
 
@@ -51,38 +75,24 @@ void	exec_order(char **order, t_list **stack_a, t_list **stack_b)
 	i = 0;
 	while (order[i])
 	{
-		if (ft_strcmp(order[i], "pa"))
+		if (ft_strcmp(order[i], "pa\n"))
 			ft_pa(stack_a, stack_b);
-		if (ft_strcmp(order[i], "pb"))
+		if (ft_strcmp(order[i], "pb\n"))
 			ft_pb(stack_a, stack_b);
-		if (ft_strcmp(order[i], "sa"))
-			ft_sa(stack_a, stack_b);
-		if (ft_strcmp(order[i], "sb"))
-			ft_sb(stack_a, stack_b);
-		if (ft_strcmp(order[i], "ra"))
-			ft_ra(stack_a, stack_b);
-		if (ft_strcmp(order[i], "rb"))
-			ft_rb(stack_a, stack_b);
-		if (ft_strcmp(order[i], "rra"))
-			ft_rra(stack_a, stack_b);
-		if (ft_strcmp(order[i], "rrb"))
-			ft_rrb(stack_a, stack_b);
+		if (ft_strcmp(order[i], "sa\n"))
+			ft_sa(stack_a);
+		if (ft_strcmp(order[i], "sb\n"))
+			ft_sb(stack_b);
+		if (ft_strcmp(order[i], "ra\n"))
+			ft_ra(stack_a);
+		if (ft_strcmp(order[i], "rb\n"))
+			ft_rb(stack_b);
+		if (ft_strcmp(order[i], "rra\n"))
+			ft_rra(stack_a);
+		if (ft_strcmp(order[i], "rrb\n"))
+			ft_rrb(stack_b);
 		i++;
 	}
-}
-
-int	check_tri(t_list *stack)
-{
-	t_list	*tmp;
-
-	tmp = stack;
-	while (tmp->next)
-	{
-		if (tmp->content > tmp->next->content)
-			return (0);
-		tmp = tmp->next;
-	}
-	return (1);
 }
 
 void	free_tab(char **tab)
@@ -103,17 +113,21 @@ int	main(int ac, char **av)
 	char	**order;
 	t_list *stack_a;
 	t_list *stack_b;
+	int	i;
 
+	i = 1;
 	stack_a = ft_stacknew(ft_atoi(av[i]));
 	stack_b = NULL;
-	while (++1 < ac)
-		ft_stackadd_back(&stack_a, ft_stack_new(ft_atoi(av[i])));
+	while (++i < ac)
+		ft_stackadd_back(&stack_a, ft_stacknew(ft_atoi(av[i])));
+	print_stack(stack_a);
 	order = get_order();
 	exec_order(order, &stack_a, &stack_b);
-	if (!check_tri(stack_a))
+	if (!check_tri(&stack_a))
 		ft_putstr("KO\n");
 	else
 		ft_putstr("OK\n");
 	free_tab(order);
+	ft_stackclear(stack_a);
 	return (0);
 }

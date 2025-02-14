@@ -6,11 +6,13 @@
 #    By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/07 16:19:21 by qlefevre          #+#    #+#              #
-#    Updated: 2022/10/13 14:41:38 by qlefevre         ###   ########.fr        #
+#    Updated: 2025/02/14 18:01:13 by quelefev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
+
+NAME2 = my_checker
 
 CC		= gcc
 
@@ -32,7 +34,20 @@ SRCS		= actions.c \
 			tri.c \
 			utils.c
 
+SRCS2		= checker.c \
+			list_fonctions.c \
+			rotate_commands.c \
+			push_commands.c \
+			swap_commands.c \
+			check_error.c \
+			get_next_line.c \
+			get_next_line_utils.c \
+			utils.c \
+			fonctions.c
+
 OBJS		= $(SRCS:.c=.o)
+
+OBJS2		= $(SRCS2:.c=.o)
 
 RM 			:= rm -rf
 MAKEFLAGS	+= --no-print-directory
@@ -41,12 +56,18 @@ all: $(NAME)
 $(NAME): $(OBJS)
 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
+checker: $(NAME2)
+	
+$(NAME2): $(OBJS2)	
+		$(CC) $(CFLAGS) $(OBJS2) -o $(NAME2)
+		
+
 clean:
 
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(OBJS2)
 
 fclean: clean
-		$(RM) $(NAME)
+		$(RM) $(NAME) $(NAME2)
 
 re: 
 		$(MAKE) fclean
@@ -89,4 +110,4 @@ test1000:			$(NAME)
 					@./push_swap $(ARG) | wc -l
 
 
-.PHONY: all clean fclean re test2 test3 test5 test100 test500 test1000
+.PHONY: all clean fclean re checker test2 test3 test5 test100 test500 test1000
