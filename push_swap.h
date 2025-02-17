@@ -6,7 +6,7 @@
 /*   By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 14:36:12 by qlefevre          #+#    #+#             */
-/*   Updated: 2025/02/14 16:57:36 by quelefev         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:53:04 by quelefev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,7 @@ void		ft_rrr(t_list **stack_a, t_list **stack_b);
 
 /* checker */
 
-char	**get_order(void);
-char	**add_new_order(char **order, char *line, int *size);
-void	exec_order(char **order, t_list **stack_a, t_list **stack_b);
-void	free_tab(char **tab);
+void		my_order(t_list **stack_a, t_list **stack_b);
+void		exec_order(char *order, t_list **stack_a, t_list **stack_b);
 
 #endif

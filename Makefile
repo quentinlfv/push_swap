@@ -6,7 +6,7 @@
 #    By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/07 16:19:21 by qlefevre          #+#    #+#              #
-#    Updated: 2025/02/14 18:01:13 by quelefev         ###   ########.fr        #
+#    Updated: 2025/02/17 17:47:55 by quelefev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,9 @@ SRCS2		= checker.c \
 			get_next_line.c \
 			get_next_line_utils.c \
 			utils.c \
-			fonctions.c
+			fonctions.c \
+			help_tri.c \
+			double_commands.c
 
 OBJS		= $(SRCS:.c=.o)
 

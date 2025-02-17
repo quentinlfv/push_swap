@@ -21,6 +21,7 @@ t_list	*ft_stacknew(int content)
 		return (NULL);
 	list->content = content;
 	list->next = NULL;
+	list->index = 0;
 	return (list);
 }
 
