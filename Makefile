@@ -6,21 +6,22 @@
 #    By: qlefevre <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/07 16:19:21 by qlefevre          #+#    #+#              #
-#    Updated: 2025/02/17 17:47:55 by quelefev         ###   ########.fr        #
+#    Updated: 2025/02/28 18:12:16 by quelefev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap
-
-NAME2 = my_checker
-
+NAME 	= push_swap
+NAME2 	= my_checker
 CC		= gcc
+CFLAGS	= -Wall -Werror -Wextra -g2
+RM 		= rm -rf
+MAKEFLAGS	+= --no-print-directory
 
-CFLAGS	= -Wall -Werror -Wextra
+SRC_PATH = src/
+OBJ_PATH = obj/
+BONUS_PATH = bonus/
 
-
-
-SRCS		= actions.c \
+SRC			= actions.c \
 			check_error.c \
 			cost.c \
 			double_commands.c \
@@ -34,8 +35,7 @@ SRCS		= actions.c \
 			tri.c \
 			utils.c
 
-SRCS2		= checker.c \
-			list_fonctions.c \
+B_SRC		= list_fonctions.c \
 			rotate_commands.c \
 			push_commands.c \
 			swap_commands.c \
@@ -47,33 +47,49 @@ SRCS2		= checker.c \
 			help_tri.c \
 			double_commands.c
 
-OBJS		= $(SRCS:.c=.o)
+C_SRC		= checker.c
 
-OBJS2		= $(SRCS2:.c=.o)
+SRCS		= $(addprefix $(SRC_PATH), $(SRC))
+OBJ			= $(SRC:.c=.o)
+OBJS		= $(addprefix $(OBJ_PATH), $(OBJ))
+INCS		= -I ./includes/
 
-RM 			:= rm -rf
-MAKEFLAGS	+= --no-print-directory
-all: $(NAME) 
+B_SRCS		= $(addprefix $(SRC_PATH), $(B_SRC))
+B_OBJ		= $(B_SRC:.c=.o)
+B_OBJS		= $(addprefix $(OBJ_PATH), $(B_OBJ))
 
-$(NAME): $(OBJS)
+C_SRCS		= $(addprefix $(BONUS_PATH), $(C_SRC))
+C_OBJ		= $(C_SRC:.c=.o)
+C_OBJS		= $(addprefix $(OBJ_PATH), $(C_OBJ))
+
+all: $(OBJ_PATH) $(NAME) 
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c 
+		$(CC) $(CFLAGS) -c $< -o $@ $(INCS)
+
+$(OBJ_PATH)%.o: $(BONUS_PATH)%.c 
+		$(CC) $(CFLAGS) -c $< -o $@ $(INCS)
+
+$(OBJ_PATH):
+		mkdir $(OBJ_PATH)
+
+$(NAME): $(OBJ_PATH) $(OBJS)
 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-
-checker: $(NAME2)
 	
-$(NAME2): $(OBJS2)	
-		$(CC) $(CFLAGS) $(OBJS2) -o $(NAME2)
+$(NAME2): $(OBJ_PATH) $(B_OBJS) $(C_OBJS)	
+		$(CC) $(CFLAGS) $(B_OBJS) $(C_OBJS) -o $(NAME2)
 		
+bonus: $(NAME2)
 
 clean:
-
-	$(RM) $(OBJS) $(OBJS2)
+	$(RM) $(OBJS) $(B_OBJS) $(OBJ_PATH)
 
 fclean: clean
 		$(RM) $(NAME) $(NAME2)
 
 re: 
-		$(MAKE) fclean
-		$(MAKE) all
+	$(MAKE) fclean
+	$(MAKE) all
 
 test2:				$(NAME)	
 					$(eval ARG = $(shell shuf -i 0-100 -n 2))
@@ -112,4 +128,4 @@ test1000:			$(NAME)
 					@./push_swap $(ARG) | wc -l
 
 
-.PHONY: all clean fclean re checker test2 test3 test5 test100 test500 test1000
+.PHONY: all clean fclean re bonus test2 test3 test5 test100 test500 test1000
